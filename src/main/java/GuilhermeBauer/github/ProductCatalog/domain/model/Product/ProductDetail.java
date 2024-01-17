@@ -1,6 +1,4 @@
-package GuilhermeBauer.github.ProductCatalog.domain.model;
-
-import GuilhermeBauer.github.ProductCatalog.DTO.ProductDTO;
+package GuilhermeBauer.github.ProductCatalog.domain.model.Product;
 
 import java.util.UUID;
 

@@ -1,7 +1,7 @@
 package GuilhermeBauer.github.ProductCatalog.service.contract;
 
 import GuilhermeBauer.github.ProductCatalog.DTO.ProductDTO;
-import GuilhermeBauer.github.ProductCatalog.domain.model.ProductModel;
+import GuilhermeBauer.github.ProductCatalog.domain.model.Product.ProductModel;
 
 import java.util.UUID;
 

@@ -1,8 +1,8 @@
 package GuilhermeBauer.github.ProductCatalog.controller;
 
 import GuilhermeBauer.github.ProductCatalog.DTO.ProductDTO;
-import GuilhermeBauer.github.ProductCatalog.domain.model.ProductDetail;
-import GuilhermeBauer.github.ProductCatalog.domain.model.ProductModel;
+import GuilhermeBauer.github.ProductCatalog.domain.model.Product.ProductDetail;
+import GuilhermeBauer.github.ProductCatalog.domain.model.Product.ProductModel;
 import GuilhermeBauer.github.ProductCatalog.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
