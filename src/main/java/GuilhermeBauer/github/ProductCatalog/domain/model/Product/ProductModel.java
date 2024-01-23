@@ -14,7 +14,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
 public class ProductModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +21,7 @@ public class ProductModel {
     private String name;
     private Double price;
     private String description;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private CategoryModel categoryModel;
     private String branch;

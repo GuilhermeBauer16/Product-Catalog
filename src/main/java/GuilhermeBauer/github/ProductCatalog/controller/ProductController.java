@@ -1,39 +1,63 @@
 package GuilhermeBauer.github.ProductCatalog.controller;
 
-import GuilhermeBauer.github.ProductCatalog.DTO.ProductDTO;
 import GuilhermeBauer.github.ProductCatalog.domain.model.Product.ProductDetail;
 import GuilhermeBauer.github.ProductCatalog.domain.model.Product.ProductModel;
-import GuilhermeBauer.github.ProductCatalog.service.ProductService;
+import GuilhermeBauer.github.ProductCatalog.services.ProductModelServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/product")
 public class ProductController {
     @Autowired
-    private final ProductService productService;
+    private final ProductModelServices productService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductModelServices productService) {
         this.productService = productService;
     }
 
-    @PostMapping
-    public ResponseEntity<ProductDetail> insertProduct(ProductDTO productDTO){
-        ProductModel product = productService.createProduct(productDTO);
-        return ResponseEntity.ok().body(new ProductDetail(product));
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+
+    public ResponseEntity<ProductModel> createProduct(ProductModel productModel){
+        ProductModel product = productService.create(productModel);
+        return ResponseEntity.ok().body(productModel);
     }
 
-    @GetMapping
-    public ResponseEntity<ProductModel> seeProduct(UUID id){
-        ResponseEntity<ProductModel> productModelResponseEntity = seeProduct(id);
-        return ResponseEntity.ok(productModelResponseEntity).getBody();
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ProductModel>> findAllProduct(){
+         productService.findAll();
+         return ResponseEntity.ok().build();
     }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE)
+
+    public ResponseEntity<ProductModel> updateProduct(ProductModel productModel) throws Exception {
+        productService.update(productModel);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable(value = " uuid")UUID uuid) throws Exception {
+        productService.delete(uuid);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+
+    public ResponseEntity<ProductModel> findById(@PathVariable(value = "uuid") UUID uuid) throws Exception {
+        productService.findById(uuid);
+        return ResponseEntity.ok().build();
+    }
+
+
 
 
 }
