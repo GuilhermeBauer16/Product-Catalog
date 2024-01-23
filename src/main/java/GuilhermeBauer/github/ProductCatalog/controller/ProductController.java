@@ -1,11 +1,14 @@
 package GuilhermeBauer.github.ProductCatalog.controller;
-
-import GuilhermeBauer.github.ProductCatalog.domain.model.Product.ProductDetail;
+import org.springframework.data.domain.Pageable;
 import GuilhermeBauer.github.ProductCatalog.domain.model.Product.ProductModel;
 import GuilhermeBauer.github.ProductCatalog.services.ProductModelServices;
+import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,46 +18,45 @@ import java.util.UUID;
 @RequestMapping("/product")
 public class ProductController {
     @Autowired
-    private final ProductModelServices productService;
+    private ProductModelServices productService;
 
-    public ProductController(ProductModelServices productService) {
-        this.productService = productService;
-    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-
-    public ResponseEntity<ProductModel> createProduct(ProductModel productModel){
+    @Transactional
+    public ResponseEntity<ProductModel> createProduct(@RequestBody ProductModel productModel){
         ProductModel product = productService.create(productModel);
-        return ResponseEntity.ok().body(productModel);
+        return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ProductModel>> findAllProduct(){
-         productService.findAll();
-         return ResponseEntity.ok().build();
+    public ResponseEntity<Page<ProductModel>> findAllProduct(@PageableDefault(size = 10, page = 0, sort= "name") Pageable pageable) {
+        Page<ProductModel> allProducts = productService.findAll(pageable);
+        return ResponseEntity.ok(allProducts);
     }
+
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
+    @Transactional
 
-    public ResponseEntity<ProductModel> updateProduct(ProductModel productModel) throws Exception {
+    public ResponseEntity<ProductModel> updateProduct(@RequestBody ProductModel productModel) throws Exception {
         productService.update(productModel);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable(value = " uuid")UUID uuid) throws Exception {
+    public ResponseEntity<ProductModel> deleteProduct(@PathVariable(value = "id")UUID uuid) throws Exception {
         productService.delete(uuid);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "/{id}",
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
 
-    public ResponseEntity<ProductModel> findById(@PathVariable(value = "uuid") UUID uuid) throws Exception {
-        productService.findById(uuid);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ProductModel> findById(@PathVariable(value = "id") UUID uuid) throws Exception {
+        ProductModel productId = productService.findById(uuid);
+        return ResponseEntity.ok(productId);
     }
 
 

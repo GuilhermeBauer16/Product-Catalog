@@ -3,27 +3,35 @@ package GuilhermeBauer.github.ProductCatalog.services;
 import GuilhermeBauer.github.ProductCatalog.domain.model.Product.ProductModel;
 import GuilhermeBauer.github.ProductCatalog.repositories.ProductRepository;
 import GuilhermeBauer.github.ProductCatalog.services.contract.ProductServiceContract;
+import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 @Service
 public class ProductModelServices implements ProductServiceContract<ProductModel> {
     @Autowired
     private ProductRepository repository;
 
+    private Logger logger = Logger.getLogger(ProductModelServices.class.getName());
+
 
     @Override
     public ProductModel create(ProductModel productModel) {
+
+        logger.info("Insert a product inside to database");
+
         return repository.save(productModel);
     }
 
     @Override
-    public List<ProductModel> findAll() {
-        return repository.findAll();
+    public Page<ProductModel> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
+
 
 
     @Override

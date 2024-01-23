@@ -15,6 +15,7 @@
 	<description>An API to catalog the user&apos;s products.</description>
 	<properties>
 		<java.version>17</java.version>
+		<model-mapper.version>3.1.1</model-mapper.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -37,10 +38,11 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>${model-mapper.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
