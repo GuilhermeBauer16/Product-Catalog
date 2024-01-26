@@ -23,6 +23,9 @@ public class CategoryModel {
         return idCategory;
     }
 
+    public void setIdCategory(UUID idCategory) {
+        this.idCategory = idCategory;
+    }
 
     public String getName() {
         return name;

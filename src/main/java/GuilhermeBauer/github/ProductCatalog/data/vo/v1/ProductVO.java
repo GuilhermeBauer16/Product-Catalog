@@ -1,5 +1,6 @@
-package GuilhermeBauer.github.ProductCatalog.domain.model.Product;
+package GuilhermeBauer.github.ProductCatalog.data.vo.v1;
 
+import GuilhermeBauer.github.ProductCatalog.domain.model.Product.ProductModel;
 import GuilhermeBauer.github.ProductCatalog.domain.model.category.CategoryModel;
 import jakarta.persistence.*;
 
@@ -8,25 +9,24 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-@Entity
-@Table(name="Product")
-public class ProductModel implements Serializable {
+public class ProductVO implements Serializable {
+
     @Serial
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private String name;
     private Double price;
     private String description;
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "category_id")
+
     private CategoryModel categoryModel;
     private String branch;
     private int quantity;
     private Boolean isAvailable;
 
-    public ProductModel() {
+    public ProductVO() {
     }
 
     public UUID getId() {
@@ -40,8 +40,6 @@ public class ProductModel implements Serializable {
     public String getName() {
         return name;
     }
-
-
 
     public void setName(String name) {
         this.name = name;
@@ -99,8 +97,8 @@ public class ProductModel implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProductModel that = (ProductModel) o;
-        return quantity == that.quantity && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(price, that.price) && Objects.equals(description, that.description) && Objects.equals(categoryModel, that.categoryModel) && Objects.equals(branch, that.branch) && Objects.equals(isAvailable, that.isAvailable);
+        ProductVO productVO = (ProductVO) o;
+        return quantity == productVO.quantity && Objects.equals(id, productVO.id) && Objects.equals(name, productVO.name) && Objects.equals(price, productVO.price) && Objects.equals(description, productVO.description) && Objects.equals(categoryModel, productVO.categoryModel) && Objects.equals(branch, productVO.branch) && Objects.equals(isAvailable, productVO.isAvailable);
     }
 
     @Override

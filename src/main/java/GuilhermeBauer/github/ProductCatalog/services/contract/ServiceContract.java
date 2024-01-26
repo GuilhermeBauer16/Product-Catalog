@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.UUID;
 
 
-public interface ProductServiceContract<T> {
+public interface ServiceContract<T> {
 
     T create(T t);
 

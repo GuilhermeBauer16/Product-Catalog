@@ -1,13 +1,20 @@
 package GuilhermeBauer.github.ProductCatalog.data.vo.v1;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 public class CategoryVO implements Serializable {
-
+    @Serial
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idCategory;
     private String name;
 
