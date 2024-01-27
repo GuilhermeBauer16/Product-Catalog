@@ -1,6 +1,5 @@
 package GuilhermeBauer.github.ProductCatalog.data.vo.v1;
 
-import GuilhermeBauer.github.ProductCatalog.domain.model.Product.ProductModel;
 import GuilhermeBauer.github.ProductCatalog.domain.model.category.CategoryModel;
 import jakarta.persistence.*;
 
