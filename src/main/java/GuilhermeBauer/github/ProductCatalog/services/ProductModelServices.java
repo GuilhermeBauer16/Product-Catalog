@@ -1,7 +1,9 @@
 package GuilhermeBauer.github.ProductCatalog.services;
 
+import GuilhermeBauer.github.ProductCatalog.data.vo.v1.CategoryVO;
 import GuilhermeBauer.github.ProductCatalog.data.vo.v1.ProductVO;
 import GuilhermeBauer.github.ProductCatalog.domain.model.Product.ProductModel;
+import GuilhermeBauer.github.ProductCatalog.domain.model.category.CategoryModel;
 import GuilhermeBauer.github.ProductCatalog.exceptions.ResourceNotFoundException;
 import GuilhermeBauer.github.ProductCatalog.mapper.Mapper;
 import GuilhermeBauer.github.ProductCatalog.repositories.ProductRepository;
@@ -20,6 +22,8 @@ import java.util.logging.Logger;
 public class ProductModelServices implements ServiceContract<ProductVO> {
     @Autowired
     private ProductRepository repository;
+//    @Autowired
+//    private CategoryModelServices categoryModelServices;
 
     private Logger logger = Logger.getLogger(ProductModelServices.class.getName());
 
@@ -28,6 +32,7 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
 
         logger.info("creating one product!");
         var entity = Mapper.parseObject(productVO, ProductModel.class);
+//        checkIfCategoryExists(productVO);
         var savedEntity = repository.save(entity);
         var vo = Mapper.parseObject(savedEntity, ProductVO.class);
 
@@ -74,5 +79,16 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
                         .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
         repository.delete(entity);
     }
+
+//    public Boolean checkIfCategoryExists(ProductVO productVO){
+//
+//        for (CategoryVO categoryModel: categoryModelServices.findAllCategory()){
+//            if(productVO.getCategoryModel().equals(categoryModel)){
+//                return true;
+//            }
+//        }
+//
+//        throw new RuntimeException("This category not exists");
+//    }
 
 }

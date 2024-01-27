@@ -8,5 +8,8 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: update
-
     show-sql: false
+
+  flyway:
+    baselineOnMigrate: true
+    clean: true

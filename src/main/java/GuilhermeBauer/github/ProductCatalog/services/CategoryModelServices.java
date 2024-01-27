@@ -29,7 +29,7 @@ public class CategoryModelServices implements ServiceContract<CategoryVO> {
 
         logger.info("Creating one category");
         var entity = Mapper.parseObject(categoryVO, CategoryModel.class);
-        entity.getName().toUpperCase();
+        entity.setName(entity.getName().toUpperCase());
         entity.setIdCategory(categoryVO.getIdCategoryVO());
         var vo = Mapper.parseObject(repository.save(entity),CategoryVO.class);
         return vo;
@@ -42,6 +42,11 @@ public class CategoryModelServices implements ServiceContract<CategoryVO> {
 
         List<CategoryVO> categoryVOPage = Mapper.parseListObject(categoryModelPage.getContent(), CategoryVO.class);
         return new PageImpl<>(categoryVOPage,pageable,categoryModelPage.getTotalElements());
+    }
+
+    public List<CategoryVO> findAllCategory() {
+
+        return Mapper.parseListObject(repository.findAll(),CategoryVO.class);
     }
 
     @Override
