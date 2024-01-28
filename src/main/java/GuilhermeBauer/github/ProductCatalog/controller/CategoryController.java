@@ -3,14 +3,15 @@ package GuilhermeBauer.github.ProductCatalog.controller;
 import GuilhermeBauer.github.ProductCatalog.controller.contract.ControllerContract;
 import GuilhermeBauer.github.ProductCatalog.data.vo.v1.CategoryVO;
 import GuilhermeBauer.github.ProductCatalog.services.CategoryModelServices;
+import GuilhermeBauer.github.ProductCatalog.util.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.UUID;
 
 @RestController
@@ -22,8 +23,12 @@ public class CategoryController implements ControllerContract<CategoryVO> {
 
     @Override
     @PostMapping(
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE
+            produces = {MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_XML,
+                    MediaType.APPLICATION_YML},
+            consumes = {MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_XML,
+                    MediaType.APPLICATION_YML}
     )
     @Transactional
     public ResponseEntity<CategoryVO> create(@RequestBody CategoryVO categoryVO) {
@@ -32,6 +37,9 @@ public class CategoryController implements ControllerContract<CategoryVO> {
     }
 
     @Override
+    @GetMapping(produces = {MediaType.APPLICATION_JSON,
+            MediaType.APPLICATION_XML,
+            MediaType.APPLICATION_YML})
     public ResponseEntity<Page<CategoryVO>> findAll(Pageable pageable) {
 
         Page<CategoryVO> categoryVOPage = categoryModelServices.findAll(pageable);
@@ -39,8 +47,12 @@ public class CategoryController implements ControllerContract<CategoryVO> {
     }
 
     @Override
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(consumes = {MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_XML,
+                    MediaType.APPLICATION_YML},
+    produces = {MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_XML,
+                    MediaType.APPLICATION_YML})
     public ResponseEntity<CategoryVO> update(@RequestBody CategoryVO categoryVO) throws Exception {
         categoryModelServices.update(categoryVO);
         return ResponseEntity.ok().build();
@@ -48,7 +60,9 @@ public class CategoryController implements ControllerContract<CategoryVO> {
 
     @Override
     @GetMapping(value = "/{id}",
-    produces = MediaType.APPLICATION_JSON_VALUE)
+    produces = {MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_XML,
+                    MediaType.APPLICATION_YML})
     public ResponseEntity<CategoryVO> findById(@PathVariable(value= "id")UUID uuid) throws Exception {
         CategoryVO categoryId = categoryModelServices.findById(uuid);
         return ResponseEntity.ok(categoryId);

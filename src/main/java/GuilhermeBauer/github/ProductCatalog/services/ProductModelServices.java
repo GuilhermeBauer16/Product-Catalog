@@ -22,14 +22,14 @@ import java.util.logging.Logger;
 public class ProductModelServices implements ServiceContract<ProductVO> {
     @Autowired
     private ProductRepository repository;
-//    @Autowired
-//    private CategoryModelServices categoryModelServices;
+    @Autowired
+    private CategoryModelServices categoryModelServices;
 
     private Logger logger = Logger.getLogger(ProductModelServices.class.getName());
 
     @Override
     public ProductVO create(ProductVO productVO) {
-
+        productVO.setId(UUID.fromString(UUID.randomUUID().toString()));
         logger.info("creating one product!");
         var entity = Mapper.parseObject(productVO, ProductModel.class);
 //        checkIfCategoryExists(productVO);
@@ -80,15 +80,15 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
         repository.delete(entity);
     }
 
-//    public Boolean checkIfCategoryExists(ProductVO productVO){
-//
-//        for (CategoryVO categoryModel: categoryModelServices.findAllCategory()){
-//            if(productVO.getCategoryModel().equals(categoryModel)){
-//                return true;
-//            }
-//        }
-//
-//        throw new RuntimeException("This category not exists");
-//    }
+    public Boolean checkIfCategoryExists(ProductVO productVO){
+
+        for (CategoryVO categoryModel: categoryModelServices.findAllCategory()){
+            if(productVO.getCategoryModel().equals(categoryModel)){
+                return true;
+            }
+        }
+
+        throw new RuntimeException("This category not exists");
+    }
 
 }

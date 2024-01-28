@@ -19,6 +19,8 @@ public class ProductModel implements Serializable {
     private String name;
     private Double price;
     private String description;
+
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "category_id")
     private CategoryModel categoryModel;

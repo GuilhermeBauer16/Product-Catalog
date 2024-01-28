@@ -1,15 +1,23 @@
 package GuilhermeBauer.github.ProductCatalog.domain.model.category;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name="Category")
-public class CategoryModel {
+@Table(name = "Category")
+public class CategoryModel implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idCategory;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
     private String name;
 
     public CategoryModel(String name) {
@@ -19,12 +27,12 @@ public class CategoryModel {
     public CategoryModel() {
     }
 
-    public UUID getIdCategory() {
-        return idCategory;
+    public UUID getId() {
+        return id;
     }
 
-    public void setIdCategory(UUID idCategory) {
-        this.idCategory = idCategory;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getName() {

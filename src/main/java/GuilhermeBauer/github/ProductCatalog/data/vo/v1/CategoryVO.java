@@ -1,9 +1,5 @@
 package GuilhermeBauer.github.ProductCatalog.data.vo.v1;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,20 +9,26 @@ public class CategoryVO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idCategory;
+    private UUID id;
     private String name;
 
     public CategoryVO(String name) {
         this.name = name;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public CategoryVO() {
     }
 
     public UUID getIdCategoryVO() {
-        return idCategory;
+        return id;
     }
 
 
@@ -43,12 +45,12 @@ public class CategoryVO implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CategoryVO that = (CategoryVO) o;
-        return Objects.equals(idCategory, that.idCategory) && Objects.equals(name, that.name);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCategory, name);
+        return Objects.hash(id, name);
     }
 }
 

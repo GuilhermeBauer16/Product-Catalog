@@ -26,12 +26,12 @@ public class CategoryModelServices implements ServiceContract<CategoryVO> {
 
     @Override
     public CategoryVO create(CategoryVO categoryVO) {
-
+        categoryVO.setId(UUID.fromString(UUID.randomUUID().toString()));
         logger.info("Creating one category");
         var entity = Mapper.parseObject(categoryVO, CategoryModel.class);
         entity.setName(entity.getName().toUpperCase());
-        entity.setIdCategory(categoryVO.getIdCategoryVO());
-        var vo = Mapper.parseObject(repository.save(entity),CategoryVO.class);
+        var saveEntity =  repository.save(entity);
+        var vo = Mapper.parseObject(saveEntity,CategoryVO.class);
         return vo;
     }
 
@@ -46,8 +46,10 @@ public class CategoryModelServices implements ServiceContract<CategoryVO> {
 
     public List<CategoryVO> findAllCategory() {
 
-        return Mapper.parseListObject(repository.findAll(),CategoryVO.class);
+       return Mapper.parseListObject(repository.findAll(), CategoryVO.class);
     }
+
+
 
     @Override
     public CategoryVO update(CategoryVO categoryVO) throws Exception {
