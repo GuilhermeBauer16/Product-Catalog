@@ -2,6 +2,7 @@ package GuilhermeBauer.github.ProductCatalog.domain.model.Product;
 
 import GuilhermeBauer.github.ProductCatalog.domain.model.category.CategoryModel;
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -9,12 +10,12 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name="Product")
+@Table(name="product")
 public class ProductModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
     private Double price;

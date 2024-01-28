@@ -29,10 +29,11 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
 
     @Override
     public ProductVO create(ProductVO productVO) {
-        productVO.setId(UUID.fromString(UUID.randomUUID().toString()));
+//        productVO.setId(UUID.fromString(productVO.getId().toString()));
+        checkIfCategoryExists(productVO);
         logger.info("creating one product!");
         var entity = Mapper.parseObject(productVO, ProductModel.class);
-//        checkIfCategoryExists(productVO);
+        entity.setCategoryModel(productVO.getCategoryModel());
         var savedEntity = repository.save(entity);
         var vo = Mapper.parseObject(savedEntity, ProductVO.class);
 
@@ -42,8 +43,8 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
     @Override
     public Page<ProductVO> findAll(Pageable pageable) {
         Page<ProductModel> productModelPage = repository.findAll(pageable);
-        List<ProductVO> productVOList = Mapper.parseListObject(productModelPage.getContent(),ProductVO.class);
-        return new PageImpl<>(productVOList,pageable,productModelPage.getTotalElements());
+        List<ProductVO> productVOList = Mapper.parseListObject(productModelPage.getContent(), ProductVO.class);
+        return new PageImpl<>(productVOList, pageable, productModelPage.getTotalElements());
     }
 
     @Override
@@ -76,15 +77,15 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
     public void delete(UUID uuid) throws Exception {
         logger.info("Deleting one product!");
         var entity = repository.findById(uuid)
-                        .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
         repository.delete(entity);
     }
 
-    public Boolean checkIfCategoryExists(ProductVO productVO){
+    public void checkIfCategoryExists(ProductVO productVO) {
 
-        for (CategoryVO categoryModel: categoryModelServices.findAllCategory()){
-            if(productVO.getCategoryModel().equals(categoryModel)){
-                return true;
+        for (CategoryVO categoryModel : categoryModelServices.findAllCategory()) {
+            if (productVO.getCategoryModel().getName().equals(categoryModel.getName())) {
+                return;
             }
         }
 
