@@ -5,6 +5,7 @@ import GuilhermeBauer.github.ProductCatalog.data.vo.v1.ProductVO;
 import GuilhermeBauer.github.ProductCatalog.domain.model.Product.ProductModel;
 import GuilhermeBauer.github.ProductCatalog.domain.model.category.CategoryModel;
 import GuilhermeBauer.github.ProductCatalog.exceptions.CategoryNotFound;
+import GuilhermeBauer.github.ProductCatalog.exceptions.ProductNotAvailable;
 import GuilhermeBauer.github.ProductCatalog.exceptions.ResourceNotFoundException;
 import GuilhermeBauer.github.ProductCatalog.mapper.Mapper;
 import GuilhermeBauer.github.ProductCatalog.repositories.ProductRepository;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -30,13 +32,11 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
 
     @Override
     public ProductVO create(ProductVO productVO) {
-//        productVO.setId(UUID.fromString(productVO.getId().toString()));
         productVO.getCategoryModel().setName(productVO.getCategoryModel().getName().toUpperCase());
         checkIfCategoryExists(productVO);
         isAvailable(productVO);
         logger.info("creating one product!");
         var entity = Mapper.parseObject(productVO, ProductModel.class);
-        entity.setCategoryModel(productVO.getCategoryModel());
         var savedEntity = repository.save(entity);
         var vo = Mapper.parseObject(savedEntity, ProductVO.class);
 
@@ -45,6 +45,7 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
 
     @Override
     public Page<ProductVO> findAll(Pageable pageable) {
+        logger.info("show all product!");
         Page<ProductModel> productModelPage = repository.findAll(pageable);
         List<ProductVO> productVOList = Mapper.parseListObject(productModelPage.getContent(), ProductVO.class);
         return new PageImpl<>(productVOList, pageable, productModelPage.getTotalElements());
@@ -72,7 +73,7 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
 
     @Override
     public ProductVO findById(UUID uuid) throws Exception {
-
+        logger.info("show one product!");
         var entity = repository.findById(uuid)
                 .orElseThrow(() -> new Exception("No records in this ID!"));
 
@@ -89,11 +90,13 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
     }
 
 
-    private void checkIfCategoryExists(ProductVO productVO) {
 
-        for (CategoryVO categoryModel : categoryModelServices.findAllCategory()) {
+    private ProductVO checkIfCategoryExists(ProductVO productVO) {
+
+        for (CategoryModel categoryModel : categoryModelServices.findAllCategory()) {
             if (productVO.getCategoryModel().getName().equals(categoryModel.getName())) {
-                return;
+                 productVO.setCategoryModel(categoryModel);
+                 return productVO;
             }
         }
 
@@ -102,7 +105,7 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
 
     private Boolean isAvailable(ProductVO productVO) {
         if (productVO.getQuantity() <= 0) {
-            throw new RuntimeException("This product is available at the moment!");
+            throw new ProductNotAvailable("This product is available at the moment!");
         }
         productVO.setAvailable(true);
         return true;

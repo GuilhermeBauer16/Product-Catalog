@@ -2,8 +2,6 @@ package GuilhermeBauer.github.ProductCatalog.domain.model.Product;
 
 import GuilhermeBauer.github.ProductCatalog.domain.model.category.CategoryModel;
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
@@ -22,7 +20,7 @@ public class ProductModel implements Serializable {
     private String description;
 
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private CategoryModel categoryModel;
     private String branch;

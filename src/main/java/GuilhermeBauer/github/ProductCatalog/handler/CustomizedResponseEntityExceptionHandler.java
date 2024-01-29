@@ -2,6 +2,7 @@ package GuilhermeBauer.github.ProductCatalog.handler;
 
 import GuilhermeBauer.github.ProductCatalog.exceptions.CategoryNotFound;
 import GuilhermeBauer.github.ProductCatalog.exceptions.ExceptionResponse;
+import GuilhermeBauer.github.ProductCatalog.exceptions.ProductNotAvailable;
 import GuilhermeBauer.github.ProductCatalog.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,9 @@ import java.util.Date;
 @RestController
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(ResourceNotFoundException.class)
+    @ExceptionHandler({ResourceNotFoundException.class,
+            CategoryNotFound.class,
+            ProductNotAvailable.class})
 
     public final ResponseEntity<ExceptionResponse> handlerNotFoundException(
             Exception ex,
@@ -35,15 +38,4 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
     }
 
-    @ExceptionHandler(CategoryNotFound.class)
-
-    public ResponseEntity<ExceptionResponse> handlerClassNotFoundException(
-            Exception ex,
-            WebRequest webRequest){
-        ExceptionResponse exceptionResponse = new ExceptionResponse(
-                new Date(), ex.getMessage(), webRequest.getDescription(false)
-        );
-
-        return new ResponseEntity<>(exceptionResponse,HttpStatus.NOT_FOUND);
-    }
 }

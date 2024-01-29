@@ -8,8 +8,8 @@ import GuilhermeBauer.github.ProductCatalog.repositories.CategoryRepository;
 import GuilhermeBauer.github.ProductCatalog.services.contract.ServiceContract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,16 +37,16 @@ public class CategoryModelServices implements ServiceContract<CategoryVO> {
 
     @Override
     public Page<CategoryVO> findAll(Pageable pageable) {
-
+        logger.info("show all category!");
         Page<CategoryModel> categoryModelPage = repository.findAll(pageable);
 
         List<CategoryVO> categoryVOPage = Mapper.parseListObject(categoryModelPage.getContent(), CategoryVO.class);
         return new PageImpl<>(categoryVOPage,pageable,categoryModelPage.getTotalElements());
     }
 
-    public List<CategoryVO> findAllCategory() {
+    public List<CategoryModel> findAllCategory() {
 
-       return Mapper.parseListObject(repository.findAll(), CategoryVO.class);
+       return Mapper.parseListObject(repository.findAll(), CategoryModel.class);
     }
 
 
@@ -64,7 +64,7 @@ public class CategoryModelServices implements ServiceContract<CategoryVO> {
 
     @Override
     public CategoryVO findById(UUID uuid) throws Exception {
-
+        logger.info("show one category!");
         var entity = repository.findById(uuid)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
@@ -80,4 +80,5 @@ public class CategoryModelServices implements ServiceContract<CategoryVO> {
         repository.delete(entity);
 
     }
+
 }
