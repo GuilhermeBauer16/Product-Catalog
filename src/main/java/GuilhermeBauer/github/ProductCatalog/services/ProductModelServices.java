@@ -33,6 +33,7 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
 //        productVO.setId(UUID.fromString(productVO.getId().toString()));
         productVO.getCategoryModel().setName(productVO.getCategoryModel().getName().toUpperCase());
         checkIfCategoryExists(productVO);
+        isAvailable(productVO);
         logger.info("creating one product!");
         var entity = Mapper.parseObject(productVO, ProductModel.class);
         entity.setCategoryModel(productVO.getCategoryModel());
@@ -60,6 +61,10 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
         entity.setPrice(productVO.getPrice());
         entity.setBranch(productVO.getBranch());
         entity.setQuantity(productVO.getQuantity());
+
+        productVO.getCategoryModel().setName(productVO.getCategoryModel().getName().toUpperCase());
+        checkIfCategoryExists(productVO);
+        isAvailable(productVO);
         var vo = Mapper.parseObject(repository.save(entity), ProductVO.class);
         return vo;
     }
@@ -83,7 +88,8 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
         repository.delete(entity);
     }
 
-    public void checkIfCategoryExists(ProductVO productVO) {
+
+    private void checkIfCategoryExists(ProductVO productVO) {
 
         for (CategoryVO categoryModel : categoryModelServices.findAllCategory()) {
             if (productVO.getCategoryModel().getName().equals(categoryModel.getName())) {
@@ -92,6 +98,14 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
         }
 
         throw new CategoryNotFound("the category " + productVO.getCategoryModel().getName() + " was not found!");
+    }
+
+    private Boolean isAvailable(ProductVO productVO) {
+        if (productVO.getQuantity() <= 0) {
+            throw new RuntimeException("This product is available at the moment!");
+        }
+        productVO.setAvailable(true);
+        return true;
     }
 
 }
