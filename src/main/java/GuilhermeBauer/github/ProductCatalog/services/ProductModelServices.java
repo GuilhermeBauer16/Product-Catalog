@@ -4,6 +4,7 @@ import GuilhermeBauer.github.ProductCatalog.data.vo.v1.CategoryVO;
 import GuilhermeBauer.github.ProductCatalog.data.vo.v1.ProductVO;
 import GuilhermeBauer.github.ProductCatalog.domain.model.Product.ProductModel;
 import GuilhermeBauer.github.ProductCatalog.domain.model.category.CategoryModel;
+import GuilhermeBauer.github.ProductCatalog.exceptions.CategoryNotFound;
 import GuilhermeBauer.github.ProductCatalog.exceptions.ResourceNotFoundException;
 import GuilhermeBauer.github.ProductCatalog.mapper.Mapper;
 import GuilhermeBauer.github.ProductCatalog.repositories.ProductRepository;
@@ -30,6 +31,7 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
     @Override
     public ProductVO create(ProductVO productVO) {
 //        productVO.setId(UUID.fromString(productVO.getId().toString()));
+        productVO.getCategoryModel().setName(productVO.getCategoryModel().getName().toUpperCase());
         checkIfCategoryExists(productVO);
         logger.info("creating one product!");
         var entity = Mapper.parseObject(productVO, ProductModel.class);
@@ -89,7 +91,7 @@ public class ProductModelServices implements ServiceContract<ProductVO> {
             }
         }
 
-        throw new RuntimeException("This category not exists");
+        throw new CategoryNotFound("the category " + productVO.getCategoryModel().getName() + " was not found!");
     }
 
 }
