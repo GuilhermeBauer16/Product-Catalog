@@ -42,6 +42,9 @@ In that project, I learned how to use the concept of VO(Value Object) to not exp
 
 * Viewing registered category.
 
+## Swagger
+* link: http://localhost:8080/swagger-ui/index.html
+
 ## Dependencies that I used in the project
 
 ### Model mapper
