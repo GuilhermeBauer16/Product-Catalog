@@ -45,6 +45,11 @@ In that project, I learned how to use the concept of VO(Value Object) to not exp
 ## Swagger
 * link: http://localhost:8080/swagger-ui/index.html
 
+## Docker 
+* docker pull guilhermebauer/product-catalog
+ 
+  * If the operation system is Linux, don't forget to put sudo before docker.
+
 ## Dependencies that I used in the project
 
 ### Model mapper
