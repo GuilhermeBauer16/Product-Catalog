@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class CategoryNotFound extends RuntimeException {
 
-    public static final long serialVersionUid = 1L;
 
     public CategoryNotFound(String message) {
         super(message);

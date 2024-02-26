@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>GuilhermeBauer.github</groupId>
-	<artifactId>Product-Catalog</artifactId>
+	<artifactId>product-catalog</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Product-Catalog</name>
+	<name>product-catalog</name>
 	<description>An API to catalog the user&apos;s products.</description>
 	<properties>
 		<java.version>17</java.version>
