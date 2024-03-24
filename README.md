@@ -18,6 +18,13 @@ In that project, I learned how to use the concept of VO(Value Object) to not exp
 ## Functionalities
 
 
+* Login of the user with Spring security authentication.
+
+* Creation of User
+
+* Updating of User
+
+
 ### Cart shopping 
 * Addition of cart shopping item divided between:    
   * product.
