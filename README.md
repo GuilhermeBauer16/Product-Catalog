@@ -15,27 +15,6 @@ A product catalog where the user can store, see, delete, and edit the products t
 
 In that project, I learned how to use the concept of VO(Value Object) to not expose the original entity, instead of using the VO class that looks like a mirror of that original entity to make the database transition more secure for don't expose the data of the original entity, for help me to make that I use the dependency Model mapper. I also learned that my project supports more than one data serialization, supported JSON, YAML, and XML via header. I use the dependency Jackson data format to make that. I also learned to use UUID and how to Primary key instead of long or big int in my tables for more security.
 
-## Functionalities
-
-
-* Login of the user with Spring security authentication.
-
-* Creation of User
-
-* Updating of User
-
-
-### Cart shopping 
-* Addition of cart shopping item divided between:    
-  * product.
-  * quantity.
-   
-* Registered cart shopping edition.     
-  
-* Deletion of cart shopping.
-
-* Viewing registered cart shopping.
-
 
 ### Product
 * Addition of product divided between:    
@@ -66,8 +45,6 @@ In that project, I learned how to use the concept of VO(Value Object) to not exp
 ## Swagger
 * link: http://localhost:8080/swagger-ui/index.html
 
-## Docker 
-* docker pull guilhermebauer/product-catalog
  
   * If the operation system is Linux, don't forget to put sudo before docker.
 
