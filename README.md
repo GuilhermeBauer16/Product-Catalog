@@ -3,7 +3,7 @@
 ## Objective              
 A product catalog where the user can store, see, delete, and edit the products to keep them more organized. The fields to register are name, price, branch, category, description, and quantity.
 
-## Working example
+## Working example. 
 
 ![Screenshot from 2024-01-30 19-55-07](https://github.com/GuilhermeBauer16/Product-Catalog/assets/123701893/c4d0917c-3584-461c-a740-5db62acf529f)
 
