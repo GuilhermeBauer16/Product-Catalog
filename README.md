@@ -1,4 +1,4 @@
-# Product Catalog                                          
+# Product Catalog                                              
                        
 ## Objective                  
 A product catalog where the user can store, see, delete, and edit the products to keep them more organized. The fields to register are name, price, branch, category, description, and quantity.
