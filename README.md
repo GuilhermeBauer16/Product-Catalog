@@ -7,7 +7,7 @@ A product catalog where the user can store, see, delete, and edit the products t
 
 ![Screenshot from 2024-01-30 19-55-07](https://github.com/GuilhermeBauer16/Product-Catalog/assets/123701893/c4d0917c-3584-461c-a740-5db62acf529f)
 
-![Screenshot from 2024-01-30 19-59-06](https://github.com/GuilhermeBauer16/Product-Catalog/assets/123701893/c7068a67-0dfe-479f-abf2-c6c8f37c8d8c)    
+![Screenshot from 2024-01-30 19-59-06](https://github.com/GuilhermeBauer16/Product-Catalog/assets/123701893/c7068a67-0dfe-479f-abf2-c6c8f37c8d8c)        
 
 
 
